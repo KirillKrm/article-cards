@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule, AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
+import { FormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Article } from '../../core/articles.service';
 import { ArticlesState } from '../../state/articles.reducer';
 import { loadArticles } from '../../state/articles.actions';
+import { HighlightPipe } from './highlight.pipe';
+import { TruncatePipe } from './truncate.pipe';
 
 @Component({
   selector: 'app-home',
@@ -28,6 +31,9 @@ import { loadArticles } from '../../state/articles.actions';
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
+    FormsModule,
+    HighlightPipe,
+    TruncatePipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -35,6 +41,9 @@ import { loadArticles } from '../../state/articles.actions';
 export class HomeComponent implements OnInit {
   articles$: Observable<Article[]>;
   error$: Observable<any>;
+
+  filterText: string = '';
+  filteredArticles: Article[] = [];
 
   constructor(
     private store: Store<{ articles: ArticlesState }>,
@@ -48,5 +57,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadArticles());
+    this.articles$.subscribe((articles) => {
+      this.filteredArticles = articles;
+    });
+  }
+
+  filterArticles(): void {
+    this.articles$.subscribe((articles) => {
+      const lowerCaseFilter = this.filterText.toLowerCase();
+
+      this.filteredArticles = articles.filter(
+        (article) =>
+          article.title.toLowerCase().includes(lowerCaseFilter) ||
+          article.summary.toLowerCase().includes(lowerCaseFilter)
+      );
+    });
+  }
+
+  navigateToArticle(article: Article): void {
+    this.router.navigate(['/article', article.id]);
   }
 }

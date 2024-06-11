@@ -1,3 +1,5 @@
+$primary: #363636;
+
 * {
   min-width: 0;
 }
@@ -6,4 +8,20 @@ html,
 body {
   margin: 0;
   font-family: Montserrat, sans-serif;
+  color: $primary;
+
+  --mat-card-title-text-font: Montserrat, sans-serif;
+  --mat-card-title-text-line-height: 29px;
+  --mat-card-title-text-size: 24px;
+  --mat-card-title-text-weight: 400;
+  --mat-card-title-text-color: $primary;
+  --mat-card-subtitle-text-font: Montserrat, sans-serif;
+  --mat-card-subtitle-text-line-height: 24px;
+  --mat-card-subtitle-text-size: 16px;
+  --mat-card-subtitle-text-weight: 400;
+  --mat-card-subtitle-text-color: $primary;
+}
+
+.highlight {
+  background-color: #fff619;
 }

@@ -34,8 +34,8 @@ export class ArticlesService {
 
   constructor(private http: HttpClient) {}
 
-  getArticles(): Observable<any> {
-    return this.http.get<ArticlesResponse>(this.articlesUrl).pipe(
+  getArticles(): Observable<Article[]> {
+    return this.http.get<ArticlesResponse>(`${this.articlesUrl}?limit=12`).pipe(
       map((response: ArticlesResponse) => {
         return response.results;
       })
