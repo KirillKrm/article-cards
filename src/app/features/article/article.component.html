@@ -1,1 +1,22 @@
-<p>article works!</p>
+<main class="main">
+  <div class="main__image">
+    <img
+      class="image"
+      *ngIf="article?.image_url"
+      [src]="article?.image_url"
+      [alt]="article?.title"
+    />
+  </div>
+  <mat-card class="main__card">
+    <mat-card-content class="card__content">
+      <mat-card-title class="card__title">{{ article?.title }}</mat-card-title>
+      <p class="card__summary">{{ article?.summary }}</p>
+    </mat-card-content>
+    <mat-card-actions class="card__actions">
+      <button mat-button (click)="navigateToHomepage()">
+        <mat-icon iconPositionStart>arrow_back</mat-icon>
+        <p><b>Back to homepage</b></p>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</main>

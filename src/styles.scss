@@ -10,6 +10,10 @@ body {
   font-family: Montserrat, sans-serif;
   color: $primary;
 
+  --mat-form-field-container-text-font: Montserrat, sans-serif;
+  --mat-form-field-subscript-text-font: Montserrat, sans-serif;
+  --mdc-filled-text-field-label-text-font: Montserrat, sans-serif;
+  --mdc-outlined-text-field-label-text-font: Montserrat, sans-serif;
   --mat-card-title-text-font: Montserrat, sans-serif;
   --mat-card-title-text-line-height: 29px;
   --mat-card-title-text-size: 24px;

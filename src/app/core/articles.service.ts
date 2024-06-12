@@ -29,7 +29,7 @@ export interface ArticlesResponse {
   providedIn: 'root',
 })
 export class ArticlesService {
-  private apiUrl = environment.API_URL;
+  private apiUrl = environment.apiUrl;
   private articlesUrl = `${this.apiUrl}/v4/articles`;
 
   constructor(private http: HttpClient) {}
@@ -40,5 +40,9 @@ export class ArticlesService {
         return response.results;
       })
     );
+  }
+
+  getArticle(id: string): Observable<Article> {
+    return this.http.get<Article>(`${this.articlesUrl}/${id}`);
   }
 }
