@@ -1,4 +1,6 @@
 $primary: #363636;
+$highlight: #fff619;
+$font: Montserrat, sans-serif;
 
 * {
   min-width: 0;
@@ -10,16 +12,16 @@ body {
   font-family: Montserrat, sans-serif;
   color: $primary;
 
-  --mat-form-field-container-text-font: Montserrat, sans-serif;
-  --mat-form-field-subscript-text-font: Montserrat, sans-serif;
-  --mdc-filled-text-field-label-text-font: Montserrat, sans-serif;
-  --mdc-outlined-text-field-label-text-font: Montserrat, sans-serif;
-  --mat-card-title-text-font: Montserrat, sans-serif;
+  --mat-form-field-container-text-font: $font;
+  --mat-form-field-subscript-text-font: $font;
+  --mdc-filled-text-field-label-text-font: $font;
+  --mdc-outlined-text-field-label-text-font: $font;
+  --mat-card-title-text-font: $font;
   --mat-card-title-text-line-height: 29px;
   --mat-card-title-text-size: 24px;
   --mat-card-title-text-weight: 400;
   --mat-card-title-text-color: $primary;
-  --mat-card-subtitle-text-font: Montserrat, sans-serif;
+  --mat-card-subtitle-text-font: $font;
   --mat-card-subtitle-text-line-height: 24px;
   --mat-card-subtitle-text-size: 16px;
   --mat-card-subtitle-text-weight: 400;
@@ -27,5 +29,5 @@ body {
 }
 
 .highlight {
-  background-color: #fff619;
+  background-color: $highlight;
 }
