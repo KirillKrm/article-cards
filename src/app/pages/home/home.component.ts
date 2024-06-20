@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 
@@ -12,11 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Article } from '../../core/articles.service';
+import { Article } from '../../types/Article';
 import { ArticlesState } from '../../state/articles.reducer';
 import { loadArticles } from '../../state/articles.actions';
-import { HighlightPipe } from './highlight.pipe';
-import { TruncatePipe } from './truncate.pipe';
+import { HighlightPipe } from '../../pipes/highlight.pipe';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-home',
@@ -38,9 +38,10 @@ import { TruncatePipe } from './truncate.pipe';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   articles$: Observable<Article[]>;
   error$: Observable<any>;
+  private unsubscribe$ = new Subject<void>();
 
   filterText: string = '';
   filteredArticles: Article[] = [];
@@ -57,13 +58,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadArticles());
-    this.articles$.subscribe((articles) => {
+    this.articles$.pipe(takeUntil(this.unsubscribe$)).subscribe((articles) => {
       this.filteredArticles = articles;
     });
   }
 
   filterArticles(): void {
-    this.articles$.subscribe((articles) => {
+    this.articles$.pipe(takeUntil(this.unsubscribe$)).subscribe((articles) => {
       const lowerCaseFilter = this.filterText.toLowerCase();
 
       this.filteredArticles = articles.filter(
@@ -76,5 +77,10 @@ export class HomeComponent implements OnInit {
 
   navigateToArticle(article: Article): void {
     this.router.navigate(['/article', article.id]);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
